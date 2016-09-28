@@ -1,0 +1,10 @@
+{
+  "private": "true",
+  "scripts": {
+    "start": "electron app --not-packaged"
+  },
+  "devDependencies": {
+    "electron": "^1.4.1",
+    "electron-packager": "^8.0.0"
+  }
+}
