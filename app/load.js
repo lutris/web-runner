@@ -7,14 +7,12 @@ const fs = require('fs')
 const Module = require('module')
 const { app } = require('electron')
 
-if (!process.defaultApp) {
+console.log(process.argv[1])
+
+if (!process.defaultApp && process.argv[1]) {
   // Remove this from cache so it can be loaded again.
   delete require.cache[require.resolve(path.join(__dirname, '/load.js'))]
-  if (process.argv[1]) {
-    loadApplicationPackage(process.argv[1])
-  } else {
-    console.error('No app specified.')
-  }
+  loadApplicationPackage(process.argv[1])
 } else {
   require(path.join(__dirname, 'main'))
 }

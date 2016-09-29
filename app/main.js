@@ -3,14 +3,13 @@
 const electron = require('electron')
 const path = require('path')
 
-const {app, BrowserWindow, Menu, dialog} = electron
+const {app, BrowserWindow, Menu, dialog, shell} = electron
 
 const args = process.argv.slice(2)
+console.log(args)
 
 let inputUrl = args[0]
 let icon = args[1] || path.join(__dirname, 'electron.png')
-
-console.log(icon)
 
 const appMenu = Menu.buildFromTemplate(require('./menu'))
 
@@ -24,18 +23,29 @@ function createWindow () {
     app.quit()
     return
   }
+  let windowSize = ''
+  let p = args.indexOf('--window')
+  if (p !== -1) {
+    windowSize = args[p+1] || 'x'
+  }
+  windowSize = windowSize.split('x').map((n) => parseInt(n, 10))
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     webPreferences: {
-      nodeIntegration: false // very important
+      nodeIntegration: false, // very important,
+      plugins: true
     },
     title: 'Lutris Electron Runner',
-    width: 800,
-    height: 600,
+    width: windowSize[0] || 800,
+    height: windowSize[1] || 600,
+    useContentSize: true,
     autoHideMenuBar: true,
     center: true,
     show: false,
-    icon: icon
+    icon: icon,
+    fullscreen: args.includes('--fullscreen', 2),
+    backgroundColor: '#000000'
   })
 
   mainWindow.loadURL(inputUrl)
@@ -44,6 +54,9 @@ function createWindow () {
   // mainWindow.webContents.openDevTools()
 
   mainWindow.once('ready-to-show', () => {
+    if (args.includes('--disable-scrolling')) {
+      mainWindow.webContents.executeJavaScript('document.body.style.overflow = "hidden"')
+    }
     mainWindow.show()
   })
 
@@ -52,6 +65,9 @@ function createWindow () {
     dialog.showErrorBox('Failed to load url', validatedUrl + '\n\n' + errorCode + ' ' + errorDescription)
     app.quit()
   })
+
+  mainWindow.webContents.on('will-navigate', handleRedirect)
+  mainWindow.webContents.on('new-window', handleRedirect)
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -62,7 +78,16 @@ function createWindow () {
   })
 }
 
+function handleRedirect (e, url) {
+  if (url !== mainWindow.webContents.getURL()) {
+    e.preventDefault()
+    console.log('Opening url ' + url + ' in external browser')
+    shell.openExternal(url)
+  }
+}
+
 Menu.setApplicationMenu(appMenu)
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.

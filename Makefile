@@ -20,7 +20,6 @@ ia32: electron_arch = ia32
 ia32: dest = build/electron-$(app_version)-$(electron_arch)
 ia32: build-ia32
 
-
 # 64-bit x86
 x86_64: x64
 x64: electron_arch = x64
@@ -32,6 +31,7 @@ build-%:
 	@rm -rf build/electron-$(app_version)-$(electron_arch)
 	@node build $(electron_arch) $(electron_version)
 	@mv build/electron-linux-$(electron_arch) build/electron-$(app_version)-$(electron_arch)
+	@cp build/electron-$(app_version)-$(electron_arch)/resources/app.asar build/electron-$(app_version)-$(electron_arch).asar
 	@echo "Built electron-$(app_version)-$(electron_arch)"
 
 cleanbuild:
