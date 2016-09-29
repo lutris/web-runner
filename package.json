@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "private": "true",
   "scripts": {
-    "start": "electron app --not-packaged",
-    "install": "cd app && npm install"
+    "start": "electron app --not-packaged"
   },
   "dependencies": {
     "electron": "^1.4.1"
