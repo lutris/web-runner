@@ -1,20 +1,23 @@
 
-PATH := node_modules/.bin:$(PATH)
+arch = $(shell uname -m)
 
-arch = ia32,x64
-platform = linux
-electron_version=1.4.1
+.PHONY: all build clean default
 
+default: $(arch)
 
-.PHONY: all build clean
+all:
+	node build ia32,x64
 
-all: build
+# 32-bit x86
+i386: ia32
+i686: ia32
+ia32:
+	node build ia32
 
-build: clean
-	electron-packager app --out build --version=$(electron_version) --platform=$(platform) --arch=$(arch) --overwrite
-	tar -zcf build/electron-runner-linux-x64.tar.gz -C build/electron-runner-linux-x64 .
-	tar -zcf build/electron-runner-linux-ia32.tar.gz -C build/electron-runner-linux-ia32 .
-
+# 64-bit x86
+x86_64: x64
+x64:
+	node build x64
 
 clean:
-	rm -rf build
+	rm -rf build cache

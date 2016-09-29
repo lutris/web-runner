@@ -1,10 +1,15 @@
 {
+  "name": "electron-runner",
+  "version": "0.0.1",
   "private": "true",
   "scripts": {
-    "start": "electron app --not-packaged"
+    "start": "electron app --not-packaged",
+    "install": "cd app && npm install"
+  },
+  "dependencies": {
+    "electron": "^1.4.1"
   },
   "devDependencies": {
-    "electron": "^1.4.1",
     "electron-packager": "^8.0.0"
   }
 }
