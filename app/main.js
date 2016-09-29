@@ -5,7 +5,7 @@ const path = require('path')
 
 const {app, BrowserWindow, Menu, dialog} = electron
 
-const args = process.argv.slice(process.argv.indexOf('--not-packaged') !== -1 ? 3 : 1)
+const args = process.argv.slice(2)
 
 let inputUrl = args[0]
 let icon = args[1] || path.join(__dirname, 'electron.png')
@@ -29,7 +29,7 @@ function createWindow () {
     webPreferences: {
       nodeIntegration: false // very important
     },
-    title: 'Electron Lutris Runner',
+    title: 'Lutris Electron Runner',
     width: 800,
     height: 600,
     autoHideMenuBar: true,

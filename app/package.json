@@ -1,4 +1,5 @@
 {
+  "name": "lutris-electron-runner",
   "private": "true",
-  "main": "main.js"
+  "main": "load.js"
 }
