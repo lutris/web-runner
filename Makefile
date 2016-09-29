@@ -19,5 +19,10 @@ x86_64: x64
 x64:
 	node build x64
 
-clean:
-	rm -rf build cache
+cleanbuild:
+	rm -rf build
+
+cleancache:
+	rm -rf cache
+
+clean: cleanbuild cleancache
