@@ -1,5 +1,0 @@
-{
-  "name": "lutris-electron-runner",
-  "private": "true",
-  "main": "load.js"
-}

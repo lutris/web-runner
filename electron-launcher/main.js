@@ -1,7 +1,6 @@
 'use strict'
 
 const electron = require('electron')
-const path = require('path')
 
 const {app, BrowserWindow, Menu, dialog, shell} = electron
 
@@ -9,7 +8,7 @@ const args = process.argv.slice(2)
 console.log(args)
 
 let inputUrl = args[0]
-let icon = args[1] || path.join(__dirname, 'electron.png')
+let icon = args[1]
 
 const appMenu = Menu.buildFromTemplate(require('./menu'))
 
@@ -24,9 +23,9 @@ function createWindow () {
     return
   }
   let windowSize = ''
-  let p = args.indexOf('--window')
+  let p = args.indexOf('--window-size')
   if (p !== -1) {
-    windowSize = args[p+1] || 'x'
+    windowSize = args[p + 1] || 'x'
   }
 
   windowSize = windowSize.split('x')
@@ -48,7 +47,6 @@ function createWindow () {
     autoHideMenuBar: true,
     show: false,
     icon: icon,
-    fullscreen: args.includes('--fullscreen', 2) && !args.includes('--disable-resizing'),
     resizable: !args.includes('--disable-resizing'),
     backgroundColor: '#000000',
     frame: !args.includes('--frameless')
@@ -62,6 +60,15 @@ function createWindow () {
 
   if (args.includes('--disable-menu-bar')) {
     mainWindow.setMenu(null)
+  }
+
+  // this has to be before maximize, so when the user exits fullscreen, window is still maximized
+  if (args.includes('--maximize-window') && !args.includes('--disable-resizing')) {
+    mainWindow.maximize()
+  }
+
+  if (args.includes('--fullscreen', 2) && !args.includes('--disable-resizing')) {
+    mainWindow.setFullScreen(true)
   }
 
   let execjs = []
@@ -110,7 +117,6 @@ function handleRedirect (e, url) {
   }
 }
 
-
 Menu.setApplicationMenu(appMenu)
 
 // This method will be called when Electron has finished
@@ -120,17 +126,5 @@ app.on('ready', createWindow)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
-
-app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
-    createWindow()
-  }
+  app.quit()
 })

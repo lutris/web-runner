@@ -1,14 +1,12 @@
 {
-  "name": "electron-runner",
-  "version": "0.0.3",
+  "name": "web-runner",
+  "version": "0.0.4",
   "private": "true",
   "scripts": {
-    "start": "electron app"
-  },
-  "dependencies": {
-    "electron": "^1.4.1"
+    "electron": "electron electron-launcher"
   },
   "devDependencies": {
-    "electron-packager": "^8.0.0"
+    "electron-packager": "^8.0.0",
+    "simple-get": "^2.2.3"
   }
 }

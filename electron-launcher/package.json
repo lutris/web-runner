@@ -1,0 +1,5 @@
+{
+  "name": "lutris-web-runner-electron",
+  "main": "load.js",
+  "dependencies": {}
+}

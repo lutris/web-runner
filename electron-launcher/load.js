@@ -1,13 +1,45 @@
 'use strict'
 
-// from https://github.com/electron/electron/blob/master/default_app/main.js
-
 const path = require('path')
 const fs = require('fs')
 const Module = require('module')
 const { app } = require('electron')
 
-console.log(process.argv[1])
+// Do not run sub-processes with lutris runtime!
+delete process.env.LD_LIBRARY_PATH
+
+if (process.env.ENABLE_FLASH_PLAYER && process.env.ENABLE_FLASH_PLAYER === '1' && !process.flashEnabled) {
+  let exepath = app.getPath('exe')
+  let apppath = app.getAppPath()
+
+  let flashpaths = [path.join(apppath, '../../../PepperFlash'), path.join(exepath, '../PepperFlash'), '/usr/lib/PepperFlash']
+
+  let flashlib = null
+  let flashversion = null
+  for (var i = 0; i < flashpaths.length; i++) {
+    let version
+    try {
+      fs.accessSync(flashpaths[i] + '/libpepflashplayer.so', fs.constants.R_OK)
+      let manifest = fs.readFileSync(flashpaths[i] + '/manifest.json', 'utf8')
+      version = JSON.parse(manifest).version
+    } catch (err) {
+      // console.error(err + '')
+    }
+    if (version) {
+      // flash version read successfully. use this flash path!
+      flashlib = flashpaths[i] + '/libpepflashplayer.so'
+      flashversion = version
+      break
+    }
+  }
+
+  if (flashlib) {
+    process.flashEnabled = true
+    console.log('Using flash player ' + flashlib + ' ' + flashversion)
+    app.commandLine.appendSwitch('ppapi-flash-path', flashlib)
+    app.commandLine.appendSwitch('ppapi-flash-version', flashversion)
+  }
+}
 
 if (!process.defaultApp && process.argv[1]) {
   // Remove this from cache so it can be loaded again.
@@ -17,6 +49,7 @@ if (!process.defaultApp && process.argv[1]) {
   require(path.join(__dirname, 'main'))
 }
 
+// code from https://github.com/electron/electron/blob/master/default_app/main.js
 function loadApplicationPackage (packagePath) {
   // Add a flag indicating app is started from default app.
   process.defaultApp = true
