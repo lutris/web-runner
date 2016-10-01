@@ -30,9 +30,6 @@ const template = [
       },
       {
         role: 'delete'
-      },
-      {
-        role: 'selectall'
       }
     ]
   },
