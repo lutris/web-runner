@@ -26,5 +26,5 @@ You can also do this to run a built app:
 
 ```
 build/web-ARCH/launch.sh <url> [flags]
-build/web-ARCH/electron/electron build/web-ARCH/runner.asar <url> [flags]
+ENABLE_FLASH_PLAYER=1 build/web-ARCH/electron/electron build/web-ARCH/runner.asar <url> [flags]
 ```
