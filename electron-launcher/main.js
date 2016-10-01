@@ -8,7 +8,18 @@ const args = process.argv.slice(2)
 console.log(args)
 
 let inputUrl = args[0]
-let icon = args[1]
+
+let gameTitle
+let icon
+let p = args.indexOf('--name')
+if (p !== -1 && args[p + 1]) {
+  gameTitle = args[p + 1]
+  app.setName(gameTitle)
+}
+p = args.indexOf('--icon')
+if (p !== -1 && args[p + 1]) {
+  icon = args[p + 1]
+}
 
 const appMenu = Menu.buildFromTemplate(require('./menu'))
 
@@ -39,7 +50,7 @@ function createWindow () {
       plugins: true,
       allowDisplayingInsecureContent: true
     },
-    title: 'Lutris Electron Runner',
+    title: gameTitle || 'Lutris Electron Runner',
     width: windowSize[0] || 800,
     height: windowSize[1] || 600,
     useContentSize: true,
