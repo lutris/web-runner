@@ -18,6 +18,6 @@ This will download electron and flash player and build to `build/web-ARCH/`. You
 
 Usage
 ---
-During development you can start the app with `npm run electron <url> <arguments>`. You need to install electron either system wide or locally with `npm install electron`.
+During development you can start the app with `npm run electron -- <url> <arguments>`. You need to install electron either system wide or locally with `npm install electron`.
 
 Example: `npm run electron -- https://lutris.net --name Lutris --maximize-window --open-links`
