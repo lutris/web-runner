@@ -8,7 +8,7 @@ This is a work in progress
 
 Build
 ---
-For building you need to install [Node.JS](https://nodejs.org/).
+For building you need to install [Node.JS](https://nodejs.org/), GNU Make and curl.
 
 ```
 npm install
