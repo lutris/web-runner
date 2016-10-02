@@ -37,7 +37,7 @@ build-%:
 	@mkdir -pv "$(dest)" "$(dest)/PepperFlash"
 	@cp -v scripts/launch.sh "$(dest)/"
 	(scripts/build.js $(electron_arch) $(electron_version) && mv -v "build/electron-linux-$(electron_arch)" "$(dest)/electron") & scripts/get-flash.sh "$(dest)/PepperFlash" $(flash_arch) & wait
-	@cp -v "$(dest)/electron/resources/app.asar" "$(dest)/runner.asar"
+	@#cp -v "$(dest)/electron/resources/app.asar" "$(dest)/runner.asar"
 	@echo $(app_version) > "$(dest)/version"
 	@echo "Build finished $(dist)"
 

@@ -14,7 +14,7 @@ For building you need to install [Node.JS](https://nodejs.org/), GNU Make and cu
 npm install
 make # builds for current architecture
 ```
-This will download electron and flash player and build to `build/web-ARCH/`. You can pass architecture to make or run `make all` to build for all supported architectures.
+This will download electron and flash player and build to `build/web-x86_64/`. You can pass architecture to make or run `make all` to build for all supported architectures.
 
 Usage
 ---
@@ -25,6 +25,6 @@ Example: `npm run electron -- https://lutris.net --name Lutris --maximize-window
 You can also do this to run a built app:
 
 ```
-build/web-ARCH/launch.sh <url> [flags]
-ENABLE_FLASH_PLAYER=1 build/web-ARCH/electron/electron build/web-ARCH/runner.asar <url> [flags]
+build/web-x86_64/launch.sh <url> [flags]
+ENABLE_FLASH_PLAYER=1 build/web-x86_64/electron/electron build/web-x86_64/electron/resources/app.asar <url> [flags]
 ```
