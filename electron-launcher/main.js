@@ -89,6 +89,7 @@ function createWindow () {
     document.body.style.webkitUserSelect = "none"
   `)
   if (args.includes('--disable-scrolling')) {
+    execjs.push('document.documentElement.style.overflow = "hidden"')
     execjs.push('document.body.style.overflow = "hidden"')
   }
   if (args.includes('--hide-cursor')) {
