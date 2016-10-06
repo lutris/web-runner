@@ -18,7 +18,7 @@ i686: ia32
 ia32: electron_arch = ia32
 ia32: flash_arch = x86-32
 ia32: package_arch = x86_32
-ia32: dist = $(package_arch)
+ia32: dist = web-$(package_arch)
 ia32: dest = build/$(dist)
 ia32: build-x86_32
 
