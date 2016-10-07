@@ -1,8 +1,9 @@
 'use strict'
 
 const electron = require('electron')
-
 const {app, BrowserWindow, Menu, dialog, shell} = electron
+
+const isUrl = require('is-url-superb')
 
 const args = process.argv.slice(2)
 console.log(args)
@@ -63,7 +64,11 @@ function createWindow () {
     frame: !args.includes('--frameless')
   })
 
-  mainWindow.loadURL(inputUrl)
+  if (isUrl(inputUrl)) {
+    mainWindow.loadURL(inputUrl)
+  } else {
+    mainWindow.loadURL('file://' + inputUrl)
+  }
 
   if (args.includes('--devtools')) {
     mainWindow.webContents.openDevTools()

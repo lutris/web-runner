@@ -1,5 +1,7 @@
 {
   "name": "lutris-web-runner-electron",
   "main": "load.js",
-  "dependencies": {}
+  "dependencies": {
+    "is-url-superb": "^2.0.0"
+  }
 }
