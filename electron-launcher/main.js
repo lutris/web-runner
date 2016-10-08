@@ -64,7 +64,7 @@ function createWindow () {
     frame: !args.includes('--frameless')
   })
 
-  if (isUrl(inputUrl)) {
+  if (isUrl(inputUrl) || inputUrl.startsWith('file://')) {
     mainWindow.loadURL(inputUrl)
   } else {
     mainWindow.loadURL('file://' + inputUrl)
