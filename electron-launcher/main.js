@@ -64,11 +64,10 @@ function createWindow () {
     frame: !args.includes('--frameless')
   })
 
-  if (isUrl(inputUrl) || inputUrl.startsWith('file://')) {
-    mainWindow.loadURL(inputUrl)
-  } else {
-    mainWindow.loadURL('file://' + inputUrl)
+  if (!isUrl(inputUrl) && !inputUrl.startsWith('file://')) {
+    inputUrl = 'file://' + inputUrl
   }
+  mainWindow.loadURL(inputUrl)
 
   if (args.includes('--devtools')) {
     mainWindow.webContents.openDevTools()
@@ -99,6 +98,14 @@ function createWindow () {
   }
   if (args.includes('--hide-cursor')) {
     execjs.push('document.body.style.cursor = "none"')
+  }
+  if (args.includes('--remove-margin')) {
+    execjs.push(`
+      document.documentElement.style.margin = '0'
+      document.body.style.margin = '0'
+      document.documentElement.style.padding = '0'
+      document.body.style.padding = '0'
+    `)
   }
 
   execjs = execjs.join(';\n')
