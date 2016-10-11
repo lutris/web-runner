@@ -77,15 +77,6 @@ function createWindow () {
     mainWindow.setMenu(null)
   }
 
-  // this has to be before maximize, so when the user exits fullscreen, window is still maximized
-  if (args.includes('--maximize-window') && !args.includes('--disable-resizing')) {
-    mainWindow.maximize()
-  }
-
-  if (args.includes('--fullscreen', 2) && !args.includes('--disable-resizing')) {
-    mainWindow.setFullScreen(true)
-  }
-
   let execjs = []
 
   execjs.push(`
@@ -111,8 +102,18 @@ function createWindow () {
   execjs = execjs.join(';\n')
 
   mainWindow.once('ready-to-show', () => {
-    mainWindow.show()
     mainWindow.webContents.executeJavaScript(execjs)
+
+    // this has to be before fullscreen, so when the user exits fullscreen, window is still maximized
+    if (args.includes('--maximize-window') && !args.includes('--disable-resizing')) {
+      mainWindow.maximize()
+    }
+
+    if (args.includes('--fullscreen', 2) && !args.includes('--disable-resizing')) {
+      mainWindow.setFullScreen(true)
+    }
+
+    mainWindow.show()
   })
 
   mainWindow.webContents.once('did-fail-load', (e, errorCode, errorDescription, validatedUrl, isMainFrame) => {
