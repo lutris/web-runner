@@ -6,7 +6,7 @@
     "electron": "electron electron-launcher"
   },
   "devDependencies": {
-    "electron-packager": "^8.0.0",
-    "simple-get": "^2.2.3"
+    "electron-packager": "^8.1.0",
+    "simple-get": "^2.3.0"
   }
 }
