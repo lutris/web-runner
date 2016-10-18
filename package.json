@@ -8,5 +8,9 @@
   "devDependencies": {
     "electron-packager": "^8.1.0",
     "simple-get": "^2.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lutris/web-runner.git"
   }
 }
