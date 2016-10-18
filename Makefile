@@ -31,12 +31,30 @@ x64: dist = web-$(package_arch)
 x64: dest = build/$(dist)
 x64: build-x86_64
 
+# armv7
+armv7h: armv7
+armv7l: armv7
+armv7hl: armv7
+armv7: electron_arch = armv7l
+armv7: flash_arch =
+armv7: package_arch = armv7
+armv7: dist = web-$(package_arch)
+armv7: dest = build/$(dist)
+armv7: build-armv7
+
 build-%:
 	@echo "Building $(dist)"
 	rm -rf "$(dest)"
-	@mkdir -pv "$(dest)" "$(dest)/PepperFlash"
+	@mkdir -pv "$(dest)"
 	@cp -v scripts/launch.sh "$(dest)/"
-	(scripts/build.js $(electron_arch) $(electron_version) && mv -v "build/electron-linux-$(electron_arch)" "$(dest)/electron") & scripts/get-flash.sh "$(dest)/PepperFlash" $(flash_arch) & wait
+	scripts/build.js $(electron_arch) $(electron_version) && mv -v "build/electron-linux-$(electron_arch)" "$(dest)/electron"
+
+	@# check if flash_arch is set
+	@if [ "$(flash_arch)" != "" ]; then\
+		mkdir -pv "$(dest)/PepperFlash";\
+		scripts/get-flash.sh "$(dest)/PepperFlash" $(flash_arch);\
+	fi
+
 	@#cp -v "$(dest)/electron/resources/app.asar" "$(dest)/runner.asar"
 	@echo $(app_version) > "$(dest)/version"
 	@echo "Build finished $(dist)"
