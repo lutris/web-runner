@@ -12,20 +12,22 @@ if (process.env.ENABLE_FLASH_PLAYER && process.env.ENABLE_FLASH_PLAYER === '1' &
   let exepath = app.getPath('exe')
   let apppath = app.getAppPath()
 
-  let flashpaths = [path.join(apppath, '../../../PepperFlash'), path.join(exepath, '../PepperFlash'), '/usr/lib/PepperFlash']
+  let flashpaths = [path.join(apppath, '../../../PepperFlash'), path.join(exepath, '../PepperFlash'), '/usr/lib/PepperFlash', '/usr/lib/chromium-browser']
 
   let flashlib = null
   let flashversion = null
   for (var i = 0; i < flashpaths.length; i++) {
     let version
+    let flashExist = false
     try {
       fs.accessSync(flashpaths[i] + '/libpepflashplayer.so', fs.constants.R_OK)
+      flashExist = true
       let manifest = fs.readFileSync(flashpaths[i] + '/manifest.json', 'utf8')
       version = JSON.parse(manifest).version
     } catch (err) {
       // console.error(err + '')
     }
-    if (version) {
+    if (flashExist) {
       // flash version read successfully. use this flash path!
       flashlib = flashpaths[i] + '/libpepflashplayer.so'
       flashversion = version
@@ -35,9 +37,11 @@ if (process.env.ENABLE_FLASH_PLAYER && process.env.ENABLE_FLASH_PLAYER === '1' &
 
   if (flashlib) {
     process.flashEnabled = true
-    console.log('Using flash player ' + flashlib + ' ' + flashversion)
+    console.log('Using Flash player ' + flashlib + ' ' + (flashversion || '(unknown version)'))
     app.commandLine.appendSwitch('ppapi-flash-path', flashlib)
-    app.commandLine.appendSwitch('ppapi-flash-version', flashversion)
+    if (flashversion) {
+      app.commandLine.appendSwitch('ppapi-flash-version', flashversion)
+    }
   }
 }
 
