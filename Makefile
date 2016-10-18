@@ -10,7 +10,7 @@ arch = $(shell uname -m)
 
 default: $(arch)
 
-all: x64 ia32
+all: x64 ia32 armv7l
 
 # 32-bit x86
 i386: ia32
@@ -31,16 +31,15 @@ x64: dist = web-$(package_arch)
 x64: dest = build/$(dist)
 x64: build-x86_64
 
-# armv7
-armv7h: armv7
-armv7l: armv7
-armv7hl: armv7
-armv7: electron_arch = armv7l
-armv7: flash_arch =
-armv7: package_arch = armv7
-armv7: dist = web-$(package_arch)
-armv7: dest = build/$(dist)
-armv7: build-armv7
+# armv7l
+armv7h: armv7l
+armv7: armv7l
+armv7l: electron_arch = armv7l
+armv7l: flash_arch =
+armv7l: package_arch = armv7
+armv7l: dist = web-$(package_arch)
+armv7l: dest = build/$(dist)
+armv7l: build-armv7l
 
 build-%:
 	@echo "Building $(dist)"
