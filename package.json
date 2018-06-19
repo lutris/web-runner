@@ -1,13 +1,13 @@
 {
   "name": "web-runner",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "private": "true",
   "scripts": {
     "electron": "electron electron-launcher"
   },
   "devDependencies": {
-    "electron-packager": "^8.1.0",
-    "simple-get": "^2.3.0"
+    "electron-packager": "^12.1.0",
+    "simple-get": "^3.0.2"
   },
   "repository": {
     "type": "git",

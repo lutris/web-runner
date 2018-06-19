@@ -2,3 +2,4 @@ node_modules
 electron-launcher/node_modules
 build
 cache
+package-lock.json

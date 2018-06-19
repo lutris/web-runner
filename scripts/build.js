@@ -5,7 +5,7 @@ const spawn = require('child_process').spawn
 
 let options = {
   name: 'electron',
-  version: process.argv[3] || undefined,
+  electronVersion: process.argv[3] || undefined,
   dir: './electron-launcher',
   out: './build',
   platform: 'linux',
