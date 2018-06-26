@@ -51,7 +51,7 @@ function createWindow () {
       plugins: true,
       allowDisplayingInsecureContent: true
     },
-    title: gameTitle || 'Lutris Electron Runner',
+    title: gameTitle || 'Lutris Web Runner',
     width: windowSize[0] || 800,
     height: windowSize[1] || 600,
     useContentSize: true,
@@ -99,15 +99,15 @@ function createWindow () {
     `)
   }
 
-  p = args.indexOf('--execjs')
-  if (p !== -1 && args[p + 1]) {
-    execjs.push(args[p + 1])
-  }
-
   execjs = execjs.join(';\n')
 
   mainWindow.once('ready-to-show', () => {
-    mainWindow.webContents.executeJavaScript(execjs, true)
+    mainWindow.webContents.executeJavaScript(execjs, false)
+
+    p = args.indexOf('--execjs')
+    if (p !== -1 && args[p + 1]) {
+      mainWindow.webContents.executeJavaScript(args[p + 1], true)
+    }
 
     // this has to be before fullscreen, so when the user exits fullscreen, window is still maximized
     if (args.includes('--maximize-window') && !args.includes('--disable-resizing')) {
