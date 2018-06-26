@@ -99,10 +99,15 @@ function createWindow () {
     `)
   }
 
+  p = args.indexOf('--execjs')
+  if (p !== -1 && args[p + 1]) {
+    execjs.push(args[p + 1])
+  }
+
   execjs = execjs.join(';\n')
 
   mainWindow.once('ready-to-show', () => {
-    mainWindow.webContents.executeJavaScript(execjs)
+    mainWindow.webContents.executeJavaScript(execjs, true)
 
     // this has to be before fullscreen, so when the user exits fullscreen, window is still maximized
     if (args.includes('--maximize-window') && !args.includes('--disable-resizing')) {
@@ -111,6 +116,11 @@ function createWindow () {
 
     if (args.includes('--fullscreen', 2) && !args.includes('--disable-resizing')) {
       mainWindow.setFullScreen(true)
+    }
+
+    p = args.indexOf('--injectcss')
+    if (p !== -1 && args[p + 1]) {
+      mainWindow.webContents.insertCSS(args[p + 1])
     }
 
     mainWindow.show()
