@@ -1,5 +1,5 @@
 
-electron_version = 1.8.7
+electron_version = 4.1.4
 
 PATH := node_modules/.bin:$(PATH)
 
