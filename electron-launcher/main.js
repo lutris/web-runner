@@ -1,7 +1,7 @@
 'use strict'
 
 const electron = require('electron')
-const {app, BrowserWindow, Menu, dialog, shell} = electron
+const {app, BrowserWindow, Menu, dialog, shell, session} = electron
 
 const isUrl = require('is-url-superb')
 
@@ -43,6 +43,18 @@ function createWindow () {
   windowSize = windowSize.split('x')
   windowSize.length = 2
   windowSize = windowSize.map((n) => parseInt(n, 10) || 0)
+
+  for (let i = 0; i < args.length; ++i) {
+    if (args[i] === '--set-cookie' && args[i + 1]) {
+      const sep = args[i + 1].indexOf('=')
+      const cookie = {
+        url: inputUrl,
+        name: args[i + 1].slice(0, sep),
+        value: args[i + 1].slice(sep + 1)
+      }
+      session.defaultSession.cookies.set(cookie)
+    }
+  }
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
