@@ -109,6 +109,11 @@ function createWindow () {
       mainWindow.webContents.executeJavaScript(args[p + 1], true)
     }
 
+    p = args.indexOf('--zoom-factor')
+    if (p !== -1) {
+      mainWindow.webContents.setZoomFactor(parseFloat(args[p + 1]))
+    }
+
     // this has to be before fullscreen, so when the user exits fullscreen, window is still maximized
     if (args.includes('--maximize-window') && !args.includes('--disable-resizing')) {
       mainWindow.maximize()
