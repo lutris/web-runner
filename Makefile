@@ -1,5 +1,5 @@
 
-electron_version = 4.1.4
+electron_version = 9.2.1
 
 PATH := node_modules/.bin:$(PATH)
 
@@ -10,7 +10,7 @@ arch = $(shell uname -m)
 
 default: $(arch)
 
-all: x64 ia32 armv7l
+all: x64 armv7l
 
 # 32-bit x86
 i386: ia32
