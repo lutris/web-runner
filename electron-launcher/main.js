@@ -12,6 +12,7 @@ let inputUrl = args[0]
 
 let gameTitle
 let icon
+let userAgent
 let p = args.indexOf('--name')
 if (p !== -1 && args[p + 1]) {
   gameTitle = args[p + 1]
@@ -22,6 +23,11 @@ if (p !== -1 && args[p + 1]) {
 p = args.indexOf('--icon')
 if (p !== -1 && args[p + 1]) {
   icon = args[p + 1]
+}
+
+p = args.indexOf('--user-agent')
+if (p !== -1 && args[p + 1]) {
+  userAgent = args[p + 1]
 }
 
 const appMenu = Menu.buildFromTemplate(require('./menu'))
@@ -56,6 +62,13 @@ function createWindow () {
       }
       session.defaultSession.cookies.set(cookie)
     }
+  }
+
+  if (userAgent) {
+    session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+      details.requestHeaders['User-Agent'] = userAgent
+      callback({ requestHeaders: details.requestHeaders })
+    })
   }
 
   // Create the browser window.
