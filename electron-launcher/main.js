@@ -16,6 +16,8 @@ let p = args.indexOf('--name')
 if (p !== -1 && args[p + 1]) {
   gameTitle = args[p + 1]
   app.setName(gameTitle)
+} else {
+  app.setName('lutris-web-runner')
 }
 p = args.indexOf('--icon')
 if (p !== -1 && args[p + 1]) {
