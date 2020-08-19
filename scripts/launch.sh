@@ -1,3 +1,3 @@
 #!/bin/bash
 
-${0%/*}/electron/electron ${0%/*}/electron/resources/app.asar $@
+${0%/*}/electron/electron ${0%/*}/electron/resources/app.asar "$@"
