@@ -10,7 +10,7 @@ echo "Checking flash player version..."
 
 info=($(node ${0%/*}/get-flash-url "$arch" "$version"))
 version=${info[1]}
-url=${info[2]}
+url=http://web.archive.org/web/${info[2]}
 
 echo "Fetching flash player $version $arch"
 
