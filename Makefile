@@ -52,7 +52,7 @@ build-%:
 	@if [ "$(flash_arch)" != "" ]; then\
 		mkdir -pv "$(dest)/PepperFlash";\
 		scripts/get-flash.sh "$(dest)/PepperFlash" $(flash_arch);\
-		bspatch "$out/libpepflashplayer.so" "$out/libpepflashplayer.so" scripts/flash_untimebomb.patch;\
+		bspatch "$(dest)/PepperFlash/libpepflashplayer.so" "$(dest)/PepperFlash/libpepflashplayer.so" scripts/flash_untimebomb.patch;\
 	fi
 
 	@#cp -v "$(dest)/electron/resources/app.asar" "$(dest)/runner.asar"
