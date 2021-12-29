@@ -1,5 +1,5 @@
 
-electron_version = 9.2.1
+electron_version = 4.2.12
 
 PATH := node_modules/.bin:$(PATH)
 
@@ -52,6 +52,7 @@ build-%:
 	@if [ "$(flash_arch)" != "" ]; then\
 		mkdir -pv "$(dest)/PepperFlash";\
 		scripts/get-flash.sh "$(dest)/PepperFlash" $(flash_arch);\
+		bspatch "$out/libpepflashplayer.so" "$out/libpepflashplayer.so" scripts/flash_untimebomb.patch;\
 	fi
 
 	@#cp -v "$(dest)/electron/resources/app.asar" "$(dest)/runner.asar"

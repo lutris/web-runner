@@ -6,11 +6,12 @@ out="$1"
 arch="$2"
 version="$3"
 
-echo "Checking flash player version..."
+if [ $arch = "x86-64" ]; then
+    arch="x86_64"
+fi
 
-info=($(node ${0%/*}/get-flash-url "$arch" "$version"))
-version=${info[1]}
-url=http://web.archive.org/web/${info[2]}
+version="32.0.0.465"
+url="http://web.archive.org/web/https://fpdownload.adobe.com/pub/flashplayer/pdc/32.0.0.465/flash_player_ppapi_linux.$arch.tar.gz"
 
 echo "Fetching flash player $version $arch"
 
