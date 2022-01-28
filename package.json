@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "electron-packager": "^15.0.0",
-    "simple-get": "^4.0.0"
+    "simple-get": "^4.0.1"
   },
   "repository": {
     "type": "git",
